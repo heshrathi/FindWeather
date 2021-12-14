@@ -75,18 +75,28 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.i("Weather Content: ", main);
 //                    Log.i("Weather Content: ", description);
 //                }
+//
+//                JSONArray jsonArray = jsonObject.getJSONArray("weather");
+//
+//                for(int i=0;i<jsonArray.length();i++){
+//                    JSONObject object=jsonArray.getJSONObject(i);
+//                    String main =object.getString("main");
+//                    Log.i("Weather: ", main);
+//                }
 
-                JSONArray jsonArray = jsonObject.getJSONArray("weather");
 
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject object=jsonArray.getJSONObject(i);
-                    String main =object.getString("main");
-                    Log.i("Weather: ", main);
+                String weatherInfo = jsonObject.getString("weather");
+
+                Log.i("Weather Content: ", weatherInfo);
+
+                JSONArray array = new JSONArray(weatherInfo);
+
+                for(int i=0; i<array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+
+                    Log.i("main", object.getString("main"));
+                    Log.i("description", object.getString("description"));
                 }
-
-
-                //String weatherInfo = jsonObject.getString("main");
-                //Log.i("Weather Content: ", weatherInfo);
             } catch (JSONException e) {
                 Log.i("Exception:", String.valueOf(e));
                 e.printStackTrace();
