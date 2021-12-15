@@ -57,51 +57,63 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        @Override
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//
+//            //Log.i("JSON ", s);
+//
+//            try {
+//                JSONObject jsonObject = new JSONObject(s);
+//
+////                JSONArray weather = jsonObject.getJSONArray("weather");
+////                for(int i = 0;i < weather.length(); i++){
+////                    JSONObject w = weather.getJSONObject(i);
+////                    String main = w.getString("main");
+////                    String description = w.getString("wind");
+////                    //...
+////                    Log.i("Weather Content: ", main);
+////                    Log.i("Weather Content: ", description);
+////                }
+////
+////                JSONArray jsonArray = jsonObject.getJSONArray("weather");
+////
+////                for(int i=0;i<jsonArray.length();i++){
+////                    JSONObject object=jsonArray.getJSONObject(i);
+////                    String main =object.getString("main");
+////                    Log.i("Weather: ", main);
+////                }
+//
+//
+//                String weatherInfo = jsonObject.getString("weather");
+//
+//                Log.i("Weather Contents : ", weatherInfo);
+//
+//                JSONArray array = new JSONArray(weatherInfo);
+//
+//                for(int i=0; i<array.length(); i++) {
+//                    JSONObject object = array.getJSONObject(i);
+//
+//                    Log.i("main", object.getString("main"));
+//                    Log.i("description", object.getString("description"));
+//                }
+//            } catch (JSONException e) {
+//                Log.i("Exception:", String.valueOf(e));
+//                e.printStackTrace();
+//            }
+//
+//        }
+
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.i("JSON ", s);
-
             try {
                 JSONObject jsonObject = new JSONObject(s);
-
-//                JSONArray weather = jsonObject.getJSONArray("weather");
-//                for(int i = 0;i < weather.length(); i++){
-//                    JSONObject w = weather.getJSONObject(i);
-//                    String main = w.getString("main");
-//                    String description = w.getString("wind");
-//                    //...
-//                    Log.i("Weather Content: ", main);
-//                    Log.i("Weather Content: ", description);
-//                }
-//
-//                JSONArray jsonArray = jsonObject.getJSONArray("weather");
-//
-//                for(int i=0;i<jsonArray.length();i++){
-//                    JSONObject object=jsonArray.getJSONObject(i);
-//                    String main =object.getString("main");
-//                    Log.i("Weather: ", main);
-//                }
-
-
                 String weatherInfo = jsonObject.getString("weather");
-
-                Log.i("Weather Content: ", weatherInfo);
-
-                JSONArray array = new JSONArray(weatherInfo);
-
-                for(int i=0; i<array.length(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-
-                    Log.i("main", object.getString("main"));
-                    Log.i("description", object.getString("description"));
-                }
-            } catch (JSONException e) {
-                Log.i("Exception:", String.valueOf(e));
+                Log.i("Weather Info", weatherInfo);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
