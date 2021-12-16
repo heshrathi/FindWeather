@@ -21,17 +21,15 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    public class DownloadWeather extends AsyncTask<String, Void, String> {
+    public class DownloadWeather extends AsyncTask <String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
             URL url;
             HttpURLConnection connection;
-
-            String result = null;
+            String result = "";
 
             try {
-
                 url = new URL(strings[0]);
                 connection = (HttpURLConnection) url.openConnection();
 
@@ -41,12 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 int data = inputStreamReader.read();
 
                 while (data != -1) {
-                    result += (char) data;
+                    result += (char) data;;
                     data = inputStreamReader.read();
                 }
-
                 return result;
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 return null;
@@ -54,56 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
                 return null;
             }
-
         }
 
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//
-//            //Log.i("JSON ", s);
-//
-//            try {
-//                JSONObject jsonObject = new JSONObject(s);
-//
-////                JSONArray weather = jsonObject.getJSONArray("weather");
-////                for(int i = 0;i < weather.length(); i++){
-////                    JSONObject w = weather.getJSONObject(i);
-////                    String main = w.getString("main");
-////                    String description = w.getString("wind");
-////                    //...
-////                    Log.i("Weather Content: ", main);
-////                    Log.i("Weather Content: ", description);
-////                }
-////
-////                JSONArray jsonArray = jsonObject.getJSONArray("weather");
-////
-////                for(int i=0;i<jsonArray.length();i++){
-////                    JSONObject object=jsonArray.getJSONObject(i);
-////                    String main =object.getString("main");
-////                    Log.i("Weather: ", main);
-////                }
-//
-//
-//                String weatherInfo = jsonObject.getString("weather");
-//
-//                Log.i("Weather Contents : ", weatherInfo);
-//
-//                JSONArray array = new JSONArray(weatherInfo);
-//
-//                for(int i=0; i<array.length(); i++) {
-//                    JSONObject object = array.getJSONObject(i);
-//
-//                    Log.i("main", object.getString("main"));
-//                    Log.i("description", object.getString("description"));
-//                }
-//            } catch (JSONException e) {
-//                Log.i("Exception:", String.valueOf(e));
-//                e.printStackTrace();
-//            }
-//
-//        }
-
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
@@ -129,12 +78,8 @@ public class MainActivity extends AppCompatActivity {
             result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q=London&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
             Log.i("Result: ", "" + result);
             Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
         }
     }
 }
