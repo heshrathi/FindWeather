@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,24 +23,32 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText cityName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DownloadWeather downloadWeather = new DownloadWeather();
+        cityName = findViewById(R.id.cityName_et);
+    }
+
+    public void SearchFun(View view) {
         String result = null;
 
-        EditText cityName;
+        String cityNameText = cityName.getText().toString();
 
+        DownloadWeather downloadWeather = new DownloadWeather();
         try {
-            result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q=London&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
-            Log.i("Result: ", "" + result);
-            //Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
+            result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q=" + cityNameText + "&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
+            Log.i("Result: ", result);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
     public class DownloadWeather extends AsyncTask <String, Void, String> {
 
@@ -79,7 +88,28 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String weatherInfo = jsonObject.getString("weather");
+                String mainInfo = jsonObject.getString("main");
+
                 Log.i("Weather Info", weatherInfo);
+                Log.i("Main Info", mainInfo);
+
+                JSONArray array1 = new JSONArray(weatherInfo);
+                //JSONArray array2 = new JSONArray(mainInfo);
+
+                for(int i=0; i<array1.length(); i++) {
+                    JSONObject object = array1.getJSONObject(i);
+
+                    Log.i("Main :", object.getString("main"));
+                    Log.i("Description :", object.getString("description"));
+                }
+//                for(int j=0; j<array2.length(); j++) {
+//                    JSONObject object = array2.getJSONObject(j);
+//
+//                    Log.i("temp_min :", object.getString("temp_min"));
+//                    Log.i("temp_max :", object.getString("temp_max"));
+//                    Log.i("pressure :", object.getString("pressure"));
+//                    Log.i("humidity :", object.getString("humidity"));
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
