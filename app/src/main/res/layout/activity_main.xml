@@ -35,6 +35,7 @@
         android:background="@color/white">
 
         <ImageButton
+            android:id="@+id/search_button"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,6 +49,9 @@
             android:layout_height="wrap_content"
             android:paddingLeft="0dp"
             android:hint="Enter your city"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
             android:layout_marginHorizontal="14dp"
             android:paddingVertical="12dp"
             android:background="@color/white" />
@@ -69,6 +73,7 @@
         app:layout_constraintTop_toBottomOf="@id/searchCity_ll" />
 
     <LinearLayout
+        android:id="@+id/details_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -78,12 +83,14 @@
         app:layout_constraintTop_toBottomOf="@id/cityName_tv">
 
         <TextView
+            android:id="@+id/temp_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:text="25C"
             android:layout_marginBottom="30dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="25°"
             android:textColor="@color/white"
             android:textSize="120sp" />
 
@@ -94,21 +101,23 @@
             android:paddingHorizontal="50dp">
 
             <TextView
+                android:id="@+id/maxTempText_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxWidth="300sp"
-                android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
+                android:maxWidth="300sp"
                 android:text="Max Temperature"
-                android:textSize="22sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/maxTemp_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
                 android:textColor="@color/white"
                 android:layout_alignParentRight="true"
-                android:text="30C"
+                android:text="30°"
                 android:textSize="22sp" />
         </RelativeLayout>
 
@@ -119,21 +128,23 @@
             android:paddingHorizontal="50dp">
 
             <TextView
+                android:id="@+id/minTempText_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
                 android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
                 android:text="Min Temperature"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/minTemp_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
                 android:textColor="@color/white"
                 android:layout_alignParentRight="true"
-                android:text="20C"
+                android:text="20°"
                 android:textSize="22sp" />
         </RelativeLayout>
 
@@ -144,15 +155,17 @@
             android:paddingHorizontal="50dp">
 
             <TextView
+                android:id="@+id/pressureText_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
                 android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
                 android:text="Pressure"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/pressure_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
@@ -170,15 +183,17 @@
             android:paddingHorizontal="50dp">
 
             <TextView
+                android:id="@+id/humidityText_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"
                 android:textColor="@color/white"
                 android:layout_alignParentLeft="true"
                 android:text="Humidity"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/humidity_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300sp"

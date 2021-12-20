@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,36 +20,50 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText cityName;
+    EditText cityNameEditText;
+    TextView cityNameText;
+    TextView tempText;
+    TextView minTempText;
+    TextView maxTempText;
+    TextView pressureText;
+    TextView humidityText;
+    ImageButton searchTempButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cityName = findViewById(R.id.cityName_et);
+        cityNameEditText = findViewById(R.id.cityName_et);
+        cityNameText = findViewById(R.id.cityName_tv);
+        tempText = findViewById(R.id.temp_tv);
+        minTempText = findViewById(R.id.minTemp_tv);
+        maxTempText = findViewById(R.id.maxTemp_tv);
+        pressureText = findViewById(R.id.pressure_tv);
+        humidityText = findViewById(R.id.humidity_tv);
     }
 
     public void SearchFun(View view) {
         String result = null;
 
-        String cityNameText = cityName.getText().toString();
+//        String cityNameTemp = cityNameEditText.getText().toString();
+//        cityNameText.setText(cityNameTemp);
 
         DownloadWeather downloadWeather = new DownloadWeather();
         try {
             result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q=" + cityNameText + "&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
-            Log.i("Result: ", result);
+            //Log.i("Result: ", result);
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
-
 
     public class DownloadWeather extends AsyncTask<String, Void, String> {
 
@@ -67,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
                 while (data != -1) {
                     result += (char) data;
-                    ;
                     data = inputStreamReader.read();
                 }
                 return result;
@@ -99,16 +115,34 @@ public class MainActivity extends AppCompatActivity {
                 //json data extract from the json result using each json object for the individual category
                 JSONObject mainTemp = new JSONObject(mainInfo);
                 String mainTempString = mainTemp.getString("temp");
-                int mainTempInt = ((Integer.parseInt(mainTempString)) - 32) * 5/9;
-                Log.i("Temperature", String.valueOf(mainTempInt));
-                JSONObject mainMinTemp = new JSONObject(mainInfo);
+                String mainMinTempString = mainTemp.getString("temp_min");
+                String mainMaxTempString = mainTemp.getString("temp_max");
+                String mainPressureString = mainTemp.getString("pressure");
+                String mainHumidityString = mainTemp.getString("humidity");
+
+                DecimalFormat decimalFormat = new DecimalFormat("##.00");
+
+                double mainTempInC = Double.parseDouble(mainTempString) - 273.15;
+                String mainTempThis = Double.toString(Double.parseDouble(decimalFormat.format(mainTempInC)));
+                Log.i("Temperature", mainTempThis);
+                Log.i("Temperature", mainTempString);
+
+                double mainMinTempInC = Double.parseDouble(mainMinTempString) - 273.15;
+                String mainMinTempThis = Double.toString(Double.parseDouble(decimalFormat.format(mainMinTempInC)));
+
+                double mainMaxTempInC = Double.parseDouble(mainMaxTempString) - 273.15;
+                String mainMaxTempThis = Double.toString(Double.parseDouble(decimalFormat.format(mainMaxTempInC)));
+
+                tempText.setText(mainTempThis + "°");
+                minTempText.setText(mainMinTempThis + "°");
+                maxTempText.setText(mainMaxTempThis + "°");
+                pressureText.setText(mainPressureString + "P");
+                pressureText.setText(mainHumidityString);
+
                 Log.i("Min Temperature", mainTemp.getString("temp_min"));
-                JSONObject mainMaxTemp = new JSONObject(mainInfo);
-                Log.i("Max Temperature", mainMaxTemp.getString("temp_max"));
-                JSONObject mainPressure = new JSONObject(mainInfo);
-                Log.i("Pressure", mainPressure.getString("pressure"));
-                JSONObject mainHumidity = new JSONObject(mainInfo);
-                Log.i("Humidity", mainHumidity.getString("humidity"));
+                Log.i("Max Temperature", mainTemp.getString("temp_max"));
+                Log.i("Pressure", mainTemp.getString("pressure"));
+                Log.i("Humidity", mainTemp.getString("humidity"));
 
                 JSONArray jsonArray = new JSONArray(weatherInfo);
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -117,43 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("Weather Main", main);
                 }
 
-                //(32°F − 32) × 5/9
-                // Log.i("Weather info 1", weatherInfo1);
-
-                //JSONArray array1 = jsonObject.getJSONArray(weatherInfo);
-
-//                String object = array1.getJSONObject(0).getString("main");
-//                Log.i("Main",object);
-//
-//                for(int i=0; i<array1.length(); i++) {
-//                    //Log.i("main info", array1.getString(i));
-//                    JSONObject object = array1.getJSONObject(i);
-//
-//                    Log.i("Main :", object.getString("main"));
-//                    Log.i("Description :", object.getString("description"));
-//                    //Log.i("Description :", object.getString("base"));
-////                                        Log.i("temp_min :", object.getString("temp_min"));
-////                    Log.i("temp_max :", object.getString("temp_max"));
-////                    Log.i("pressure :", object.getString("pressure"));
-////                    Log.i("humidity :", object.getString("humidity"));
-//                }
-//                for(int j=0; j<array2.length(); j++) {
-//                    JSONObject object = array2.getJSONObject(j);
-//
-//                    Log.i("temp_min :", object.getString("temp_min"));
-//                    Log.i("temp_max :", object.getString("temp_max"));
-//                    Log.i("pressure :", object.getString("pressure"));
-//                    Log.i("humidity :", object.getString("humidity"));
-//                }
-//                JSONArray array2 = new JSONArray(mainInfo);
-//                for(int j=0; j<array2.length(); j++) {
-//                    JSONObject jsonObject1 = array2.getJSONObject(j);
-//
-//                    Log.i("temp_min :", jsonObject1.getString("temp_min"));
-//                    Log.i("temp_max :", jsonObject1.getString("temp_max"));
-//                    Log.i("pressure :", jsonObject1.getString("pressure"));
-//                    Log.i("humidity :", jsonObject1.getString("humidity"));
-//                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
