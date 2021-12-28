@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     EditText cityNameEditText;
     TextView cityNameText;
     TextView tempText;
-    TextView minTempText;
+    TextView minTempText,minTemp,maxTemp,pressure,humidity;
     TextView maxTempText;
     TextView pressureText;
     TextView humidityText;
@@ -46,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
         maxTempText = findViewById(R.id.maxTemp_tv);
         pressureText = findViewById(R.id.pressure_tv);
         humidityText = findViewById(R.id.humidity_tv);
+        minTemp = findViewById(R.id.minTempText_tv);
+        maxTemp = findViewById(R.id.maxTempText_tv);
+        pressure = findViewById(R.id.pressureText_tv);
+        humidity = findViewById(R.id.humidityText_tv);
+
+        cityNameText.setVisibility(View.INVISIBLE);
+        tempText.setVisibility(View.INVISIBLE);
+        minTempText.setVisibility(View.INVISIBLE);
+        maxTempText.setVisibility(View.INVISIBLE);
+        pressureText.setVisibility(View.INVISIBLE);
+        humidityText.setVisibility(View.INVISIBLE);
+        minTemp.setVisibility(View.INVISIBLE);
+        maxTemp.setVisibility(View.INVISIBLE);
+        pressure.setVisibility(View.INVISIBLE);
+        humidity.setVisibility(View.INVISIBLE);
     }
 
     public void SearchFun(View view) {
@@ -139,6 +154,17 @@ public class MainActivity extends AppCompatActivity {
                 pressureText.setText(mainPressureString + "P");
                 pressureText.setText(mainHumidityString);
                 cityNameText.setText(cityNameEditText.getText().toString());
+
+                cityNameText.setVisibility(View.VISIBLE);
+                tempText.setVisibility(View.VISIBLE);
+                minTempText.setVisibility(View.VISIBLE);
+                maxTempText.setVisibility(View.VISIBLE);
+                pressureText.setVisibility(View.VISIBLE);
+                humidityText.setVisibility(View.VISIBLE);
+                minTemp.setVisibility(View.VISIBLE);
+                maxTemp.setVisibility(View.VISIBLE);
+                pressure.setVisibility(View.VISIBLE);
+                humidity.setVisibility(View.VISIBLE);
 
                 Log.i("Min Temperature", mainTemp.getString("temp_min"));
                 Log.i("Max Temperature", mainTemp.getString("temp_max"));

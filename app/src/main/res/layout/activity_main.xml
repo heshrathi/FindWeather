@@ -70,7 +70,8 @@
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchCity_ll" />
+        app:layout_constraintTop_toBottomOf="@id/searchCity_ll"
+        android:textAllCaps="true"/>
 
     <LinearLayout
         android:id="@+id/details_ll"
