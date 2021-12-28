@@ -53,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
 //        String cityNameTemp = cityNameEditText.getText().toString();
 //        cityNameText.setText(cityNameTemp);
-
+        String city = cityNameEditText.getText().toString();
         DownloadWeather downloadWeather = new DownloadWeather();
         try {
-            result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q=" + cityNameText + "&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
+            result = downloadWeather.execute("https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=e7f1d25e003762a9c93bbcfa9f201a79").get();
             //Log.i("Result: ", result);
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 maxTempText.setText(mainMaxTempThis + "°");
                 pressureText.setText(mainPressureString + "P");
                 pressureText.setText(mainHumidityString);
+                cityNameText.setText(cityNameEditText.getText().toString());
 
                 Log.i("Min Temperature", mainTemp.getString("temp_min"));
                 Log.i("Max Temperature", mainTemp.getString("temp_max"));
